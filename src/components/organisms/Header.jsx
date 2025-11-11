@@ -1,15 +1,37 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useAuth } from "@/layouts/Root";
 import ApperIcon from "@/components/ApperIcon";
-import { cn } from "@/utils/cn";
+import Button from "@/components/atoms/Button";
+import { cn } from "@/lib/utils";
+const LogoutButton = () => {
+  const { logout } = useAuth();
+  
+  return (
+    <Button 
+      onClick={logout}
+      variant="outline"
+      size="sm"
+      icon="LogOut"
+      className="ml-2"
+    >
+      Logout
+    </Button>
+  );
+};
 
 const Header = () => {
   const location = useLocation();
   const [showNotifications, setShowNotifications] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
-  const [unreadCount, setUnreadCount] = useState(3); // Example count, replace with actual logic
+  const unreadCount = 3; // Mock unread count
+
+const isActivePage = (path) => {
+    return location.pathname === path;
+  };
+
   const navItems = [
-    { name: "Dashboard", path: "", icon: "LayoutDashboard" },
+    { name: "Dashboard", path: "", icon: "Home" },
     { name: "Farms", path: "farms", icon: "TreePine" },
     { name: "Crops", path: "crops", icon: "Wheat" },
     { name: "Tasks", path: "tasks", icon: "CheckSquare" },
@@ -88,6 +110,7 @@ const Header = () => {
             >
               <ApperIcon name="Settings" size={20} />
             </button>
+            <LogoutButton />
           </div>
         </div>
       </div>
